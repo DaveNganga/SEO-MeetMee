@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home_style.css') }}">
+<style>
+body {font-family: "Times New Roman", Georgia, Serif;
+    background-color:#f2f0f1;}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display";
+  letter-spacing: 3px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-padding w3-card">
+    <h6 class="w3-bar-item " style="text-decoration:none">MeetMe! Date Planning Made Easy</h6>
+    <!-- Right-sided navbar links. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+        <!--<a href="{{ url_for( 'results', movies = ' ') }}" class="w3-bar-item w3-button border-detailz" style="margin-top:10px">get started</a>-->
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:1100px">
+
+  <!-- About Section -->
+  <div class="w3-row w3-padding-64" id="about">
+    <div class="w3-col m6 w3-padding-large w3-hide-small">
+     <img src="../static/img/logo4.png" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+    </div>
+
+    <div class="w3-col m6 w3-padding-large">
+      <h1 class="w3-center">MeetMe</h1><br />
+      <h5 class="w3-center">Date Planning Made Easy</h5>
+      <p class="w3-large">Healthy relationships are central to living a positive, productive life. MeetMe is an online date planning platform that allows the user to search for the perfect date locaiton with out wassting anytime or arguing with his/her significan other. It the was jump-started in the United States of America.  
+          <span class="w3-tag w3-light-grey"></span></p>
+      <p class="w3-large w3-text-grey w3-hide-medium">MeetMe is led by it's cofounders: David Ng'ang'a, Denisse Jimenez Linguez, Fitsum Maru, Joel Salguero and Veronica Alvarez, who formed the fast growing site in 2021!</p>
+    </div>
+      <center><a href="{{ url_for( 'results', movies = ' ') }}" class="w3-bar-item w3-button border-details"><h6>get started</h6></a></center>
+  </div>
+
+  
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-padding-32 footer">
+  <h6 class="">By Dave,Veronica,Denisse,Fitsum and Joel</h6>
+</footer>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.9.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/8.9.0/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+</body>
+</html>

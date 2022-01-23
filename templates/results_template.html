@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>MeetMe | Search Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no"/>
+    <script charset="utf-8" src="{{ url_for('static', filename='js/results_js.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_style.css') }}">
+    <!-- Load mapbox library for the maps -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+    <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <!-- Load icon library for the search bar -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+       <style>
+        body {font-family: "Times New Roman", Georgia, Serif;}
+        h1, h2, h3, h4, h5, h6 {
+          font-family: "Playfair Display";
+          letter-spacing: 5px;
+        }
+           .h7{
+          font-size:14px;
+          letter-spacing: 3px;
+        }
+           p{
+               font-family: "serif";
+           }
+    </style>
+    <script>
+    //window.onload = run_onload();
+    window.onbeforeunload = function() {
+        var x = document.getElementById('cart_content');
+        var y = document.getElementById('results');
+        x.innerHTML='';
+        x.innerHTML='';
+     }
+    function run_onload(){
+        if(window.location.hash == "#redirected"){
+            paste_results();
+            window.location.hash = "#";
+            
+        }
+        
+    }  
+    function store_cart(){
+        var cart_info = document.getElementById('cart_container').innerHTML;
+        sessionStorage.setItem("CartDiv",cart_info);
+    }
+//     function store_results(){
+//         var results_info = document.getElementById('results').innerHTML;
+//         sessionStorage.setItem("Results",results_info);
+//     }
+    function paste_cart(){
+        var cart = sessionStorage.getItem("CartDiv");
+        var string_cart = cart.toString();
+        if(cart){
+            document.getElementById("cart_container").innerHTML = cart;
+        }
+    }
+//     function paste_results(){
+//         var cart = sessionStorage.getItem("Results");
+//         var results_info = cart.toString();
+//         var results_div = document.getElementById("results");
+//         if(cart && results_div){
+//             results_div.innerHTML = cart;
+//         }
+//     }
+    function session_storage(zip){
+        sessionStorage.setItem("ZipCode",zip);       
+    }
+    function redirected(item,item2,item3){
+        sessionStorage.setItem("Address",item);
+        sessionStorage.setItem("Name",item2);
+        sessionStorage.setItem("Coord",item3);
+        location.href="{{ url_for( 'maps')}}";
+    }
+    function store(item){
+        var address = item;
+    }
+    function add_to_cart(name,id,address,long_lat){
+            var x = document.getElementById('cart_content');
+            x.innerHTML+= "<button onclick='sess_storage(); store_cart(); redirected(\""+address+"\",\""+name+"\",\""+long_lat+"\");' class='buttons maps_button cart_item' style='display:none;' id='cart:"+id+"'><h6>"+name+"</h6></button>";
+    }
+    function toggle_to_cart(id){
+        var x = document.getElementById("cart:"+id);
+      if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+      }
+    }
+    function sess_storage(){
+        zip = document.getElementById("search_bar").value;
+        sessionStorage.setItem("ZipCode",zip);  
+    }
+    function check(){
+        location.href="{{ url_for('results')}}";
+        //if (window.location.hash === '#displayData') {}
+    }
+    function check_session(){
+       var zip_para = sessionStorage.getItem("ZipCode"); 
+       //var re_subbed = sessionStorage.getItem('re_submitted');
+        
+       if(zip_para.length == 5 ){
+          var searchBar = document.getElementById("search_bar");
+          searchBar.value = zip_para;
+          //alert(re_subbed);
+          document.getElementById("search").submit();
+          }
+       else{
+             //alert("notequaltofie"); //do nothing
+              
+          }
+       }
+//     function requiredAttr(){
+//         var attri = document.getElementsByClassName('input_boxes');
+//         for(var i = 0; i < attri.length; i++){
+//             var a = attri[i];
+//                a.required = 'true';
+            
+//            }
+//     }
+    function submit_forms(){
+        {{checkboxes}}
+        const CheckBoxes = "Testing for Usability";
+        //const CheckBoxes = document.getElementById(CheckBoxes);
+        $.ajax({
+        url: '{{ url_for('results') }}',
+            type: 'POST',
+            data: {
+                CheckBoxes: CheckBoxes
+            }
+        });
+    } 
+    </script>
+<body>
+    <section>
+        <header>
+              <div class="w3-top">
+                  <div class="w3-bar w3-white w3-padding w3-card" style="width:100%;transition:0.5s all ease; max-height:500px;">
+                    <div style="Display:flex; width:100%;"> 
+                      <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+                            <!--(restaurants, parks, lakes, hiking spots, stores, attractions, or bars)-->
+                       <!-- The Search Bar -->
+                       <form class="search nav_bar" id="form12" method="POST" action"">
+                               {{ form.csrf_token }}
+                                {{ form.name }}
+                            <button onclick="sess_storage(); submit_forms();" type="submit" value="submit"><i class="fa fa-search">{{ form.search_button(class="none") }}</i></button>
+                             {{ form.search_bar(value='', placeholder="Bar, Restaurant, etc") }}
+                            {{ form.zip_bar(value='', placeholder="Zip-Code")}}
+                        </form>
+                    </div>
+                  </div>
+                </div>
+          </header>
+    </section>
+    <section style="display:flex; width:100%; min-height:900px; padding-top:25px;">
+        <div id="cart_container">
+            <div class="cart">
+                <div class="cart_title">
+                    <img src="../static/img/cart_icon.png" alt="Cart" width="50" height="50"> 
+                    <div id="cart_content">
+
+                    </div>
+                    <button class="buttons cart_buttons" onclick="clear_cart(); store_cart()"><h5>Clear Cart</h5></button>
+                </div>
+            </div>
+        </div>
+                   
+        <div class="results"  id="results">
+      {% block content %}
+                 
+                 
+       {% endblock content %}
+                
+        </div>
+    </section>
+    <script>
+        //check_session();
+    function location_hasher(){
+        if(window.location.hash == "#redirected"){
+            check_session();
+        }
+        else{
+            window.location.hash="";
+        }
+    }
+        
+    </script>
+</body>
+    <!-- Footer -->
+    
+<footer class="w3-center w3-light-grey w3-padding-32 footer">
+  <h6 class="">By Dave,Veronica,Denisse,Fitsum and Joel</h6>
+</footer>
+</html>

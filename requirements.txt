@@ -1,0 +1,8 @@
+Flask 
+flask_wtf 
+requests 
+flask_behind_proxy 
+pandas 
+wtforms 
+wtforms.validators 
+gunicorn

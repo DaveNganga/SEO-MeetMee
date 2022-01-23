@@ -1,0 +1,45 @@
+{% extends 'results_template.html' %}
+{% block content %}   
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<script>
+</script>
+{% if results|length %}
+    <div class="results_title">
+      <h1>YOUR RESULTS</h1>            
+    </div>
+    <div class="results_body">
+    {% for ind in results.index %}
+    <div id="{{results['Id'][ind]}}" class="results_unit">
+        <!--https://i.postimg.cc/V66wnfNT/fork.png-->
+        <img src="{{results['Picture'][ind]}}" alt="Title">
+        <center><h3>{{results['Name'][ind]}}</h3><hr style="width:80%;height:3px;background-color:#7294d4;"></center>
+        <p><b>Address:</b> {{results['Address'][ind]}}</p><center></center><br />
+        <label class="like" name="add to cart" value="add to cart" style="float:left; width:30%;"> 
+            <input class="like_box" type="checkbox" style="display:none" onclick= "store_cart(); toggle_to_cart('{{results['Id'][ind]}}')"/>
+            <div class="hearth"><center></center></div>
+        </label>
+        <button type="button" onclick='sess_storage(); store_cart(); redirected("{{results["Address"][ind]}}","{{results["Name"][ind]}}","{{results["Latitude_Longitude"][ind]}}");' style="float:right" class="buttons maps_button"><h6 class="h7">Find In Maps</h6></button>
+    </div>
+        <script type="text/javascript">add_to_cart("{{results['Name'][ind]}}","{{results['Id'][ind]}}","{{results['Address'][ind]}}","{{results['Latitude_Longitude'][ind]}}")</script>
+    {% endfor %}
+</div>
+ {% endif %}
+{#{% if movies %}
+    {% for col,row in movies.iterrows() %}
+                <h1>{{ col }}</h1>
+        {% for key in row %}
+                    <p>{{ key }}</p>
+                    <p>{{ key.index }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}#}
+{% endblock content %} 
+

@@ -1,0 +1,55 @@
+{% extends 'results_template.html' %}
+{% block content %}
+<title>MeetMe | Mapy Search Results</title>                   
+<div id="map_header"></div>
+<a onclick="to_maps();" style="float:left" class="w3-bar-item w3-button border-details"><h6>open in google maps</h6></a>
+<!--<a onclick="store_cart();" href="{{ url_for( 'results', _anchor='redirected')}}" style="float:right;margin-right:10%" class="w3-bar-item w3-button border-details"><h6>back to results</h6></a>-->
+<div id="map" style="margin-top:100px;">
+    </div>                        
+<script>
+    paste_cart();
+    function to_maps(){
+        var name_para = sessionStorage.getItem("Name");
+        var address_para = sessionStorage.getItem("Address");
+        stringed_name = name_para.toString();
+        stringed_address = address_para.toString();
+        url = "http://maps.google.com/maps?q="+stringed_name.concat(" ", stringed_address)
+        window.open(url); //now opens in new tab
+    }
+    var address_para = sessionStorage.getItem("Address");
+    var name_para = sessionStorage.getItem("Name");
+    var coords = sessionStorage.getItem('Coord');
+    var map_header = document.getElementById('map_header');
+    map_header.innerHTML= "<h1>"+name_para+"</h1><h4>"+address_para+"</h4>"
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGp0ZWNoIiwiYSI6ImNrcnFzYWgwdzJsNGsydXFyZHhlMWxvcmEifQ.EXtP_qor9fErwsKDusCb8w';
+    var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+    mapboxClient.geocoding
+        .forwardGeocode({
+            query: name_para+address_para, //the address goes here (we need to make a way to automatically put the address here)
+            autocomplete: false,
+            limit: 1
+        })
+        .send()
+        .then(function (response) {
+            if (
+                response &&
+                response.body &&
+                response.body.features &&
+                response.body.features.length
+            ) {
+                var feature = response.body.features[0];
+
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: feature.center,
+                    zoom: 10
+                });
+
+                // Create a marker and add it to the map.
+                new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
+            }
+        });
+</script>
+{% endblock content %}
+
