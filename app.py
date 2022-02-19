@@ -6,7 +6,7 @@ from APIs.four_square_api import search_api
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)
 
-app.config['SECRET_KEY'] = 'c1804d2c3c864c6ba5fef9a5225c9882'
+app.config['SECRET_KEY'] = ''
 
 # The app route below is the default home page
 @app.route("/", methods=['GET', 'POST'])

@@ -2,7 +2,7 @@ import requests
 
 def findCoordinates(location):
     URL = "https://geocode.search.hereapi.com/v1/geocode"
-    api_key = 'QIYCfUTZnnzO8RgbhSFwVn4KTq9ewhdPHZDXqESvRd0' # Acquire from developer.here.com
+    api_key = '' # Acquire from developer.here.com
     PARAMS = {'apikey':api_key,'q':location} 
 
     # sending get request and saving the response as response object 

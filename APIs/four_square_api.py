@@ -6,7 +6,7 @@ from APIs.geocoder_api import findCoordinates
 def search_api(zip, query):
     lat_lng_tuple = findCoordinates(zip)
     latlng = str(lat_lng_tuple[0]) + ',' + str(lat_lng_tuple[1])
-    api_key =  "fsq3nFprQxe7QiGQMGzAItnUgnuubR4Y6T5/sg6bB3zWKMc="
+    api_key =  ""
     search_query = query
     radius = 32186 #this is 20 miles
     limit = 15
