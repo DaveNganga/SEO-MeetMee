@@ -2,11 +2,12 @@ from flask import Flask, render_template, request
 from search_bar import SeachBar
 from flask_behind_proxy import FlaskBehindProxy
 from APIs.four_square_api import search_api
+import os
 
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)
 
-app.config['SECRET_KEY'] = ''
+app.config['SECRET_KEY'] = os.environ[Secret_key]
 
 # The app route below is the default home page
 @app.route("/", methods=['GET', 'POST'])
