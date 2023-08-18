@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)
 
-app.config['SECRET_KEY'] = os.getenv(Secret_key)
+app.config['SECRET_KEY'] = os.getenv('Secret_key')
 
 # The app route below is the default home page
 @app.route("/", methods=['GET', 'POST'])
