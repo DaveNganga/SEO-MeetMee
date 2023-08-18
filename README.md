@@ -1,6 +1,5 @@
 # date-project
 
-# See MeetMee (project proposal) for the project proposal
 # see MeetMee (Markup) for a markup diagram
 
-for security reasons project is without api keys. 
+for security reasons project is without api and secret keys. 
